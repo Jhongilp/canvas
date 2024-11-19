@@ -8,6 +8,13 @@ const Drawer = (ctx: CanvasRenderingContext2D) => {
       ctx.arc(loc.x, loc.y, size / 2, 0, Math.PI * 2);
       ctx.fill();
     },
+    drawLine(p1: Point, p2: Point, color = "black") {
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      ctx.moveTo(p1.x, p1.y);
+      ctx.lineTo(p2.x, p2.y);
+      ctx.stroke();
+    },
     drawText(text: string, loc: Point, color = "white") {
       ctx.beginPath();
       ctx.fillStyle = color;
@@ -68,5 +75,9 @@ export const setupCartesianPlane = (canvas: HTMLCanvasElement) => {
     drawer.drawText("B", B);
     drawer.drawPoint(C);
     drawer.drawText("C", C);
+
+    drawer.drawLine(A, B);
+    drawer.drawLine(A, C);
+    drawer.drawLine(B, C);
   };
 };
