@@ -15,7 +15,7 @@ const Drawer = (ctx: CanvasRenderingContext2D) => {
       ctx.lineTo(p2.x, p2.y);
       ctx.stroke();
     },
-    drawText(text: string, loc: Point, color = "white") {
+    drawText(text: string, loc: Point, color = "black") {
       ctx.beginPath();
       ctx.fillStyle = color;
       ctx.textAlign = "center";
@@ -34,6 +34,12 @@ const Drawer = (ctx: CanvasRenderingContext2D) => {
       ctx.strokeStyle = "gray";
       ctx.stroke();
       ctx.setLineDash([]);
+    },
+    average(p1: Point, p2: Point) {
+      return { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 };
+    },
+    distance(p1: Point, p2: Point) {
+      return Math.hypot(p1.x - p2.x, p1.y - p2.y);
     },
   };
 };
@@ -67,17 +73,24 @@ export const setupCartesianPlane = (canvas: HTMLCanvasElement) => {
   };
 
   const update = () => {
+    const c = drawer.distance(A, B);
+    const a = drawer.distance(B, C);
+    const b = drawer.distance(A, C);
+
     ctx.clearRect(-OFFSET.x, -OFFSET.y, ctx.canvas.width, ctx.canvas.height);
     drawer.drawCoordinateSystem(OFFSET);
-    drawer.drawPoint(A);
-    drawer.drawText("A", A);
-    drawer.drawPoint(B);
-    drawer.drawText("B", B);
-    drawer.drawPoint(C);
-    drawer.drawText("C", C);
+    // drawer.drawPoint(A);
+    // // drawer.drawText("A", A);
+    // drawer.drawPoint(B);
+    // // drawer.drawText("B", B);
+    // drawer.drawPoint(C);
+    // // drawer.drawText("C", C);
 
     drawer.drawLine(A, B);
+    drawer.drawText("c: " + Math.round(c), drawer.average(A, B));
     drawer.drawLine(A, C);
+    drawer.drawText("b: " + Math.round(b), drawer.average(A, C));
     drawer.drawLine(B, C);
+    drawer.drawText("a: " + Math.round(a), drawer.average(B, C));
   };
 };
