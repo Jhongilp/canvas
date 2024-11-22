@@ -80,8 +80,15 @@ export const setupCartesianPlane = (canvas: HTMLCanvasElement) => {
     const a = drawer.distance(B, C);
     const b = drawer.distance(A, C);
 
+    const sin = a / c;
+
     ctx.clearRect(-OFFSET.x, -OFFSET.y, ctx.canvas.width, ctx.canvas.height);
     drawer.drawCoordinateSystem(OFFSET);
+
+    drawer.drawText("sin(α) = a / c = " + sin.toFixed(2), {
+      x: -OFFSET.x / 2,
+      y: OFFSET.y * 0.7,
+    });
 
     drawer.drawLine(A, B);
     drawer.drawLine(A, C);
