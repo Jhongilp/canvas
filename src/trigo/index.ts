@@ -20,7 +20,10 @@ const Drawer = (ctx: CanvasRenderingContext2D) => {
       ctx.fillStyle = color;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.font = "bold 13px Courier";
+      ctx.font = "bold 18px Courier";
+      ctx.strokeStyle = "white";
+      ctx.lineWidth = 7;
+      ctx.strokeText(text, loc.x, loc.y);
       ctx.fillText(text, loc.x, loc.y);
     },
     drawCoordinateSystem(OFFSET: Point) {
@@ -79,18 +82,13 @@ export const setupCartesianPlane = (canvas: HTMLCanvasElement) => {
 
     ctx.clearRect(-OFFSET.x, -OFFSET.y, ctx.canvas.width, ctx.canvas.height);
     drawer.drawCoordinateSystem(OFFSET);
-    // drawer.drawPoint(A);
-    // // drawer.drawText("A", A);
-    // drawer.drawPoint(B);
-    // // drawer.drawText("B", B);
-    // drawer.drawPoint(C);
-    // // drawer.drawText("C", C);
 
     drawer.drawLine(A, B);
-    drawer.drawText("c: " + Math.round(c), drawer.average(A, B));
     drawer.drawLine(A, C);
-    drawer.drawText("b: " + Math.round(b), drawer.average(A, C));
     drawer.drawLine(B, C);
-    drawer.drawText("a: " + Math.round(a), drawer.average(B, C));
+    drawer.drawText("c", drawer.average(A, B));
+    drawer.drawText("b", drawer.average(A, C));
+    drawer.drawText("a", drawer.average(B, C));
+    drawer.drawText("0", A);
   };
 };
