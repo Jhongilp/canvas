@@ -22,7 +22,7 @@ const Drawer = (ctx: CanvasRenderingContext2D) => {
       ctx.textBaseline = "middle";
       ctx.font = "bold 18px Courier";
       ctx.strokeStyle = "white";
-      ctx.lineWidth = 7;
+      ctx.lineWidth = 3;
       ctx.strokeText(text, loc.x, loc.y);
       ctx.fillText(text, loc.x, loc.y);
     },
@@ -43,6 +43,9 @@ const Drawer = (ctx: CanvasRenderingContext2D) => {
     },
     distance(p1: Point, p2: Point) {
       return Math.hypot(p1.x - p2.x, p1.y - p2.y);
+    },
+    toDeg(rad: number) {
+      return (rad * 180) / Math.PI;
     },
   };
 };
@@ -81,6 +84,7 @@ export const setupCartesianPlane = (canvas: HTMLCanvasElement) => {
     const b = drawer.distance(A, C);
 
     const sin = a / c;
+    const theta = Math.asin(sin);
 
     ctx.clearRect(-OFFSET.x, -OFFSET.y, ctx.canvas.width, ctx.canvas.height);
     drawer.drawCoordinateSystem(OFFSET);
@@ -89,6 +93,14 @@ export const setupCartesianPlane = (canvas: HTMLCanvasElement) => {
       x: -OFFSET.x / 2,
       y: OFFSET.y * 0.7,
     });
+
+    drawer.drawText(
+      "α = " + theta.toFixed(2) + " (" + Math.round(drawer.toDeg(theta)) + "°)",
+      {
+        x: OFFSET.x / 2,
+        y: OFFSET.y * 0.7,
+      }
+    );
 
     drawer.drawLine(A, B);
     drawer.drawLine(A, C);
