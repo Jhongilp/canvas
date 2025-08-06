@@ -12,22 +12,21 @@ export const setup2dPhysicsEngine = (canvas: HTMLCanvasElement) => {
   };
   ctx.translate(OFFSET.x, OFFSET.y);
 
-  // const particles: Particle[] = [];
-  // for (let i = 0; i < 100; i++) {
-  //   particles.push(new Particle(Math.random() * 800 - 400, Math.random() * 600 - 300, 1));
-  // }
   const particle = new Particle(
     Math.random() * 800 - 400,
     Math.random() * 600 - 300,
     1
   );
 
-  const velocity = new Vec2(2, -1);
-
+  let timePreviousFrame = performance.now();
   const update = () => {
-    ctx.clearRect(-OFFSET.x, -OFFSET.y, canvas.width, canvas.height);
-    particle.position.add(velocity);
+    const deltaTime = (performance.now() - timePreviousFrame) / 1000;
+    timePreviousFrame = performance.now();
 
+    particle.velocity = new Vec2(100 * deltaTime, 30 * deltaTime);
+    particle.position.add(particle.velocity);
+
+    ctx.clearRect(-OFFSET.x, -OFFSET.y, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.arc(
       particle.position.x,
