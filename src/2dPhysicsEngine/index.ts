@@ -16,10 +16,7 @@ export const setup2dPhysicsEngine = (canvas: HTMLCanvasElement) => {
 
     particle.acceleration = new Vec2(1, 9.8 * PIXELS_PER_METER); // gravity
     particle.acceleration.scale(deltaTime);
-    particle.velocity.add(particle.acceleration);
-    particle.position.add(particle.velocity);
-    // console.log("acc", particle.acceleration);
-    // console.log("vel", particle.velocity);
+    particle.integrate();
 
     if (particle.position.y > canvas.height) {
       particle.position.y = canvas.height;

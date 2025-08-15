@@ -14,4 +14,9 @@ export class Particle {
     this.mass = mass;
     this.force = new Vec2(0, 0);
   }
+
+  integrate() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+  }
 }
